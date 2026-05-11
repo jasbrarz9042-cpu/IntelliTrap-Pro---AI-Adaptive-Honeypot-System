@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | IntelliTrap Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dashboard-body">
+    <nav class="dashboard-nav">
+        <div class="nav-brand">
+            <div class="logo-small"></div>
+            <h2>IntelliTrap Pro <span>Admin</span></h2>
+        </div>
+        <div class="nav-actions">
+            <span class="engine-status"><span class="pulse-dot green"></span> AI Security Engine Active</span>
+            <a href="/export" class="export-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Export CSV
+            </a>
+        </div>
+    </nav>
+
+    <main class="dashboard-main">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Attacks Blocked</h3>
+                <div class="stat-value" id="total-attacks">--</div>
+                <div class="stat-chart mini-chart"></div>
+            </div>
+            <div class="stat-card danger">
+                <h3>High-Risk Targets</h3>
+                <div class="stat-value" id="high-risk">--</div>
+                <div class="stat-desc">Critical severity events</div>
+            </div>
+            <div class="stat-card terminal-card">
+                <h3>Live Monitoring Terminal</h3>
+                <div class="terminal-content" id="live-terminal">
+                    <div class="terminal-line">IntelliTrap OS v2.0 initialized...</div>
+                    <div class="terminal-line">AI Engine running on port 5000</div>
+                    <div class="terminal-line text-green">Waiting for incoming connections...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+            <div class="panel main-chart-panel">
+                <div class="panel-header">
+                    <h3>Attack Frequency (Last 24h)</h3>
+                </div>
+                <div class="panel-body">
+                    <canvas id="attackChart"></canvas>
+                </div>
+            </div>
+
+            <div class="panel top-targets-panel">
+                <div class="panel-header">
+                    <h3>Top Targeted Usernames</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="target-list" id="top-usernames">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel table-panel">
+            <div class="panel-header">
+                <h3>Threat Log Analysis</h3>
+                <div class="table-actions">
+                    <input type="text" id="search-log" placeholder="Search IP or Username..." class="search-input">
+                    <select id="filter-risk" class="filter-select">
+                        <option value="all">All Risks</option>
+                        <option value="High Risk">High Risk</option>
+                        <option value="Medium Risk">Medium Risk</option>
+                        <option value="Low Risk">Low Risk</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="threat-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>IP Address</th>
+                            <th>Username Attempt</th>
+                            <th>Password</th>
+                            <th>Browser/Device</th>
+                            <th>Risk Level</th>
+                        </tr>
+                    </thead>
+                    <tbody id="threat-tbody">
+                        <!-- Populated via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>
